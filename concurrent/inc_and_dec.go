@@ -5,6 +5,7 @@ import (
 	"sync"
 )
 
+// RunWithoutMutexProtect 没有互斥锁保护的案例
 func RunWithoutMutexProtect() {
 	number := 0
 	var wg sync.WaitGroup
@@ -23,6 +24,33 @@ func RunWithoutMutexProtect() {
 	}(&wg)
 	wg.Wait()
 	fmt.Println("number = ", number)
+}
+
+// RunWithMutex 使用互斥锁保护共享变量
+func RunWithMutex() {
+	var lock sync.Mutex
+	var wg sync.WaitGroup
+	number := 0
+	wg.Add(2)
+	go func() {
+		for i := 0; i < 10000; i++ {
+			lock.Lock()
+			number += 1
+			lock.Unlock()
+		}
+		wg.Done()
+	}()
+	go func() {
+		for i := 0; i < 10000; i++ {
+			lock.Lock()
+			number -= 1
+			lock.Unlock()
+		}
+		wg.Done()
+	}()
+	wg.Wait()
+	fmt.Println("number = ", number)
+
 }
 
 func RunWithChannel() {
@@ -57,5 +85,6 @@ func RunWithChannel() {
 
 func main() {
 	// RunWithoutMutexProtect()
-	RunWithChannel()
+	//RunWithChannel()
+	RunWithMutex()
 }
