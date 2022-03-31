@@ -31,3 +31,29 @@ type TreeNode struct {
 	Left  *TreeNode
 	Right *TreeNode
 }
+
+type ListNodeHeap []*ListNode
+
+func (self ListNodeHeap) Len() int { return len(self) }
+
+func (self ListNodeHeap) Less(i, j int) bool {
+	if self[i] != nil && self[j] != nil {
+		return self[i].Val < self[j].Val
+	} else if self[i] == nil {
+		return false
+	} else {
+		return true
+	}
+}
+
+func (self ListNodeHeap) Swap(i, j int) { self[i], self[j] = self[j], self[i] }
+
+func (self *ListNodeHeap) Push(x interface{}) { *self = append(*self, x.(*ListNode)) }
+
+func (self *ListNodeHeap) Pop() interface{} {
+	old := *self
+	n := len(old)
+	x := old[n-1]
+	*self = old[0 : n-1]
+	return x
+}
