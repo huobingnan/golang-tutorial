@@ -55,4 +55,16 @@ func TestParseTree(t *testing.T) {
 			t.Fail()
 		}
 	})
+
+	t.Run("Case5", func(t *testing.T) {
+		input := "1,#,#,#,#,#,#,#"
+		fmt.Println("\tInput :", input)
+		fmt.Println("\tExpect: 1")
+		root := ParseTree(input)
+		output := strings.Join(TreeLevelOrderTraversal(root), ",")
+		fmt.Println("\tOutput:", output)
+		if output != "1" {
+			t.Fail()
+		}
+	})
 }
