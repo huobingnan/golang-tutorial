@@ -4,7 +4,7 @@ func _doMerge(src []int, left, right, mid int) {
 	temp := make([]int, right-left+1)
 	i, j, k := left, mid+1, 0
 	// merge
-	for i <= mid && j <= right {
+	for ; i <= mid && j <= right; k++ {
 		if src[i] < src[j] {
 			temp[k] = src[i]
 			i++
@@ -12,15 +12,12 @@ func _doMerge(src []int, left, right, mid int) {
 			temp[k] = src[j]
 			j++
 		}
-		k++
 	}
-	for ; i <= mid; i++ {
+	for ; i <= mid; i, k = i+1, k+1 {
 		temp[k] = src[i]
-		k++
 	}
-	for ; j <= right; j++ {
+	for ; j <= right; j, k = j+1, k+1 {
 		temp[k] = src[j]
-		k++
 	}
 	// copy
 	copy(src[left:right+1], temp)
