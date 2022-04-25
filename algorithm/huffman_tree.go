@@ -1,4 +1,4 @@
-package test
+package algorithm
 
 type HuffmanNode struct {
 	Left, Right *HuffmanNode

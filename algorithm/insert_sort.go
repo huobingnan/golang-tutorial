@@ -1,10 +1,4 @@
-package test
-
-type number interface {
-	~uint8 | ~uint16 | ~uint32 | ~uint64
-	~int8 | ~int16 | ~int32 | ~int64
-	~float32 | ~float64 | ~complex64
-}
+package algorithm
 
 // DirectInsertSort 2022-03-20 尝试更改为泛型算法
 // DirectInsertSort 直接插入排序
