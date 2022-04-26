@@ -23,6 +23,7 @@ func _doMerge(src []int, left, right, mid int) {
 	copy(src[left:right+1], temp)
 }
 
+// 递归形式的归并排序的实现
 func _doMergeSort(src []int, left, right int) {
 	if left >= right {
 		return
@@ -35,4 +36,31 @@ func _doMergeSort(src []int, left, right int) {
 
 func MergeSort(src []int) {
 	_doMergeSort(src, 0, len(src)-1)
+}
+
+// 对于递归形式的归并排序的一点改进
+func _doMergeSortV2(src []int, left, right int, temp []int) {
+	if left >= right {
+		return
+	}
+	mid := (left + right) / 2
+	_doMergeSortV2(src, left, mid, temp)
+	_doMergeSortV2(src, mid+1, right, temp)
+	// copy source to temp
+	copy(temp[left:right+1], src[left:right+1])
+	// merge
+	i, j, k := left, mid+1, 0
+	for k = left; k <= right; k++ {
+		if i == mid+1 {
+			src[k], j = temp[j], j+1
+		} else if j == right+1 || temp[i] <= temp[j] {
+			src[k], i = temp[i], i+1
+		} else {
+			src[k], j = temp[j], j+1
+		}
+	}
+}
+
+func MergeSortV2(src []int) {
+	_doMergeSortV2(src, 0, len(src)-1, make([]int, len(src)))
 }
